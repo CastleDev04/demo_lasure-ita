@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/public/Home';
@@ -15,11 +15,18 @@ import AdminUsuarios from './pages/private/Usuarios';
 import AdminLayout from './pages/private/AdminLayout';
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    localStorage.getItem('admin_authenticated') === 'true'
-  );
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   
-  const isAdminRoute = window.location.pathname.startsWith('/admin');
+  // Verificar autenticación al cargar
+  useEffect(() => {
+    const auth = localStorage.getItem('admin_authenticated') === 'true';
+    setIsAuthenticated(auth);
+  }, []);
+
+  // Verificar si es ruta de admin
+  const isAdminRoute = () => {
+    return window.location.pathname.startsWith('/admin');
+  };
 
   // Componente para rutas protegidas
   const ProtectedRoute = ({ children }) => {
@@ -40,7 +47,7 @@ function App() {
     <Router>
       <div className="min-h-screen flex flex-col">
         {/* Solo mostrar Navbar y Footer en rutas públicas */}
-        {!isAdminRoute && <Navbar />}
+        {!isAdminRoute() && <Navbar />}
         
         <main className="flex-grow">
           <Routes>
@@ -74,7 +81,7 @@ function App() {
         </main>
         
         {/* Solo mostrar Footer en rutas públicas */}
-        {!isAdminRoute && <Footer />}
+        {!isAdminRoute() && <Footer />}
       </div>
     </Router>
   );

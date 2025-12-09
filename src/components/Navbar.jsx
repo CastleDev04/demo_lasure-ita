@@ -12,9 +12,9 @@ export default function Navbar() {
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
               <div className="w-12 h-12 bg-orange-600 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-xl">LS</span>
+                <span className="text-white font-bold text-xl">A</span>
               </div>
-              <span className="ml-3 text-2xl font-bold text-orange-600">La Sureñita</span>
+              <span className="ml-3 text-2xl font-bold text-orange-600">Alquiler</span>
             </Link>
           </div>
           

@@ -16,7 +16,7 @@ export default function AdminLayout({ onLogout }) {
     { id: 'reservas', label: 'Reservas', icon: Calendar, path: '/admin/reservas' },
     { id: 'galeria', label: 'Galería', icon: ImageIcon, path: '/admin/galeria' },
     { id: 'usuarios', label: 'Usuarios', icon: Users, path: '/admin/usuarios' },
-    // { id: 'reportes', label: 'Reportes', icon: BarChart3, path: '/admin/reportes' },
+    { id: 'clientes', label: 'Clientes', icon: Users, path: '/admin/clientes' },
     // { id: 'finanzas', label: 'Finanzas', icon: DollarSign, path: '/admin/finanzas' },
     // { id: 'configuracion', label: 'Configuración', icon: Settings, path: '/admin/configuracion' },
   ];
@@ -51,7 +51,7 @@ export default function AdminLayout({ onLogout }) {
                   <Home className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h1 className="text-xl font-bold text-gray-900">Quinta La Sureñita</h1>
+                  <h1 className="text-xl font-bold text-gray-900">Alquiler</h1>
                   <p className="text-sm text-gray-600">Panel de Administración</p>
                 </div>
               </div>

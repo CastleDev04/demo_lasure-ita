@@ -36,7 +36,7 @@ export default function Dashboard() {
       {/* Header del dashboard */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-gray-600 mt-2">Bienvenido al panel de administración de Quinta La Sureñita</p>
+        <p className="text-gray-600 mt-2">Bienvenido al panel de administración de Alquiler</p>
       </div>
 
       {/* Métricas principales */}

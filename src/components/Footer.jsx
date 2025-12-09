@@ -10,7 +10,7 @@ export default function Footer() {
               <div className="w-12 h-12 bg-orange-600 rounded-full flex items-center justify-center">
                 <span className="text-white font-bold text-xl">LS</span>
               </div>
-              <span className="ml-3 text-2xl font-bold">La Sureñita</span>
+              <span className="ml-3 text-2xl font-bold">Alquiler</span>
             </div>
             <p className="text-gray-400">El lugar perfecto para tus eventos especiales.</p>
           </div>
@@ -41,13 +41,13 @@ export default function Footer() {
             <ul className="space-y-2 text-gray-400">
               <li>Capiatá km 21, ruta 1</li>
               <li>+595 XXX XXX XXX</li>
-              <li>@lasurenita.py</li>
+              <li>@alquiler</li>
             </ul>
           </div>
         </div>
         
         <div className="border-t border-gray-800 mt-8 pt-8 text-center">
-          <p className="text-gray-400">© 2024 La Sureñita - Quinta la Sureñita. Todos los derechos reservados.</p>
+          <p className="text-gray-400">© 2024 Alquiler. Todos los derechos reservados.</p>
         </div>
       </div>
     </footer>

@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LogIn, Home } from 'lucide-react';
+import { useAuthContext } from '../../context/AuthContext';
+import { LogIn, Home, AlertCircle } from 'lucide-react';
 
-export default function AdminLogin({ onLogin }) {
+export default function AdminLogin() {
   const [credentials, setCredentials] = useState({
     email: '',
     password: ''
   });
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+  
+  // 🔥 USAMOS NUESTRO CONTEXTO EN LUGAR DE PROPS
+  const { signIn, loading, error, clearError } = useAuthContext();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -17,36 +20,50 @@ export default function AdminLogin({ onLogin }) {
       ...prev,
       [name]: value
     }));
-    setError('');
+    clearError(); // Limpiar errores al escribir
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-    setLoading(true);
+    clearError();
 
-    // Simulación de validación con timeout
-    setTimeout(() => {
-      // Credenciales de prueba
-      const validCredentials = [
-        { email: 'admin@lasurenita.com', password: 'password123' },
-        { email: 'admin@quintalasurenita.com', password: 'password123' }
-      ];
+    console.log('🔐 Intentando login...');
+    
+    // 🔥 USAMOS signIn DEL CONTEXTO
+    const result = await signIn(credentials.email, credentials.password);
 
-      const isValid = validCredentials.some(
-        cred => cred.email === credentials.email && cred.password === credentials.password
-      );
+    if (result.success) {
+      console.log('✅ Login exitoso, redirigiendo...');
+      
+      // Redirigir al dashboard
+      navigate('/admin');
+    } else {
+      console.log('❌ Login fallido:', result.error);
+      // El error ya está en el contexto
+    }
+  };
 
-      if (isValid) {
-        // Llama a la función onLogin del padre
-        onLogin();
-        // Redirige al dashboard
-        navigate('/admin');
-      } else {
-        setError('Credenciales incorrectas. Por favor, intente de nuevo.');
-      }
-      setLoading(false);
-    }, 1000); // Simula un delay de red
+  const handleDemoLogin = async () => {
+    clearError();
+    
+    // Credenciales de demo
+    const demoEmail = 'admin@alquiler.com';
+    const demoPassword = 'password123';
+    
+    setCredentials({
+      email: demoEmail,
+      password: demoPassword
+    });
+    
+    // Esperar un momento para que se vean las credenciales
+    await new Promise(resolve => setTimeout(resolve, 300));
+    
+    // 🔥 USAR signIn DEL CONTEXTO
+    const result = await signIn(demoEmail, demoPassword);
+    
+    if (result.success) {
+      navigate('/admin');
+    }
   };
 
   return (
@@ -55,7 +72,7 @@ export default function AdminLogin({ onLogin }) {
       <div className="text-center mb-8">
         <div className="flex items-center justify-center gap-3 mb-4">
           <Home className="w-12 h-12 text-white" />
-          <h1 className="text-4xl font-bold text-white">Quinta La Sureñita</h1>
+          <h1 className="text-4xl font-bold text-white">Alquiler</h1>
         </div>
         <p className="text-xl text-orange-100">Sistema de Administración</p>
       </div>
@@ -70,14 +87,18 @@ export default function AdminLogin({ onLogin }) {
           <p className="text-gray-600 mt-2">Ingresa tus credenciales para acceder</p>
         </div>
         
+        {/* 🔥 MOSTRAR ERRORES DEL CONTEXTO */}
         {error && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg">
-            <p className="font-medium">Error de autenticación</p>
-            <p className="text-sm mt-1">{error}</p>
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+            <div className="flex items-center gap-2 text-red-700">
+              <AlertCircle size={20} />
+              <span className="font-medium">Error de autenticación</span>
+            </div>
+            <p className="text-sm text-red-600 mt-1">{error}</p>
           </div>
         )}
         
-        {/* Formulario CON onSubmit */}
+        {/* Formulario */}
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -116,6 +137,8 @@ export default function AdminLogin({ onLogin }) {
               <input
                 type="checkbox"
                 id="remember"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
                 className="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 rounded"
                 disabled={loading}
               />
@@ -124,9 +147,14 @@ export default function AdminLogin({ onLogin }) {
               </label>
             </div>
             
-            <a href="#" className="text-sm text-orange-600 hover:text-orange-500">
+            <button
+              type="button"
+              onClick={() => {/* TODO: forgot password */}}
+              className="text-sm text-orange-600 hover:text-orange-500 disabled:text-gray-400"
+              disabled={loading}
+            >
               ¿Olvidaste tu contraseña?
-            </a>
+            </button>
           </div>
           
           <button
@@ -148,29 +176,40 @@ export default function AdminLogin({ onLogin }) {
           </button>
         </form>
         
+        {/* Botón de demo */}
+        <div className="mt-6">
+          <button
+            onClick={handleDemoLogin}
+            disabled={loading}
+            className="w-full py-3 border-2 border-orange-600 text-orange-600 rounded-lg font-semibold hover:bg-orange-50 transition disabled:opacity-50"
+          >
+            Probar con Credenciales de Demo
+          </button>
+        </div>
+        
         {/* Demo credentials */}
         <div className="mt-8 p-4 bg-orange-50 rounded-lg border border-orange-200">
           <p className="text-sm text-gray-600 text-center">
             <strong>Credenciales de demostración:</strong><br />
-            Email: admin@lasurenita.com<br />
+            Email: admin@alquiler.com<br />
             Contraseña: password123
           </p>
         </div>
 
         {/* Volver al sitio público */}
         <div className="mt-6 text-center">
-          <a 
-            href="/" 
+          <button 
+            onClick={() => navigate('/')}
             className="text-orange-600 hover:text-orange-700 text-sm font-medium inline-flex items-center gap-1"
           >
             ← Volver al sitio público
-          </a>
+          </button>
         </div>
       </div>
       
       {/* Footer */}
       <div className="mt-8 text-center">
-        <p className="text-orange-100">© {new Date().getFullYear()} Quinta La Sureñita. Todos los derechos reservados.</p>
+        <p className="text-orange-100">© {new Date().getFullYear()} Alquiler. Todos los derechos reservados.</p>
       </div>
     </div>
   );

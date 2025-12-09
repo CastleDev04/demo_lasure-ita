@@ -40,7 +40,7 @@ export default function Home() {
       <section className="pt-16 bg-gradient-to-br from-orange-600 to-orange-800 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="text-center">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">Quinta La Sureñita</h1>
+            <h1 className="text-5xl md:text-6xl font-bold mb-6">Alquiler</h1>
             <p className="text-xl md:text-2xl mb-8 text-orange-100">
               El lugar perfecto para tus eventos especiales
             </p>

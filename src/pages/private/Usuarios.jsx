@@ -22,7 +22,7 @@ export default function AdminUsuarios() {
     { 
       id: 1, 
       nombre: 'Alexis Castillo', 
-      email: 'alexis@lasurenita.com', 
+      email: 'alexis@alquiler.com', 
       telefono: '+595991111111', 
       rol: 'Administrador',
       fechaRegistro: '2023-11-10',
@@ -49,7 +49,7 @@ export default function AdminUsuarios() {
     { 
       id: 4, 
       nombre: 'Juan Pérez', 
-      email: 'juan@lasurenita.com', 
+      email: 'juan@alquiler.com', 
       telefono: '+595991111111', 
       rol: 'Empleado',
       fechaRegistro: '2024-03-05',

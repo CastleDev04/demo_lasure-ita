@@ -3,7 +3,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { 
   Menu, X, Bell, Search, LogOut,
   Home, Calendar, Image as ImageIcon,
-  Users, BarChart3, DollarSign, Settings
+  Users, Package, BarChart3,CreditCard, DollarSign, Settings
 } from 'lucide-react';
 
 export default function AdminLayout({ onLogout }) {
@@ -13,10 +13,12 @@ export default function AdminLayout({ onLogout }) {
 
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: Home, path: '/admin' },
+    { id: 'clientes', label: 'Clientes', icon: Users, path: '/admin/clientes' },
+    { id: 'servicios', label: 'Servicios', icon: Package, path: '/admin/servicios' },
     { id: 'reservas', label: 'Reservas', icon: Calendar, path: '/admin/reservas' },
+    { id: 'pagos', label: 'Pagos', icon: CreditCard, path: '/admin/pagos' },
     { id: 'galeria', label: 'Galería', icon: ImageIcon, path: '/admin/galeria' },
     { id: 'usuarios', label: 'Usuarios', icon: Users, path: '/admin/usuarios' },
-    { id: 'clientes', label: 'Clientes', icon: Users, path: '/admin/clientes' },
     // { id: 'finanzas', label: 'Finanzas', icon: DollarSign, path: '/admin/finanzas' },
     // { id: 'configuracion', label: 'Configuración', icon: Settings, path: '/admin/configuracion' },
   ];

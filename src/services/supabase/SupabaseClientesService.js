@@ -1,5 +1,5 @@
 import { IClientesService } from '../interfaces/IClientesService';
-import {supabase }from './supabaseClient';
+import {supabase }from './SupabaseClient';
 
 export default class SupabaseClientesService extends IClientesService {
   async getClientes() {
